@@ -1,0 +1,10 @@
+
+@font-face {
+  font-family: 'OldHungarian';
+  src: url('/css/oldhungarian/OldHungarian.eot?#iefix') format('embedded-opentype'), 
+	   url('/css/oldhungarian/OldHungarian.woff') format('woff'), 
+	   url('/css/oldhungarian/OldHungarian.ttf')  format('truetype'), 
+	   url('/css/oldhungarian/OldHungarian.svg#OldHungarian') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
