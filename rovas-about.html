@@ -1,0 +1,255 @@
+<header>
+    <link rel="stylesheet" href="//oldhungarian.eu/stylesheets/oldhungarian.css"/>
+</header>
+
+<head>
+    <title>Rovás Írás | Old Hungarian</title>
+    <link rel="stylesheet" href="css/oldhungarian/oldhungarian.css"/>
+    <meta charset="UTF-8">
+    <meta name="description" content="Old Hungarian script (Rovás Irás) was the Hungarian script used primarily before the year 1000, 
+before the christianisation of Hungary. Due to Hungary converting to Roman Catholicism, it lead 
+to the language being Latinised and the removal of the old 'pagan' writing system.">
+    <meta name="keywords" content="Hungarian, Old Hungarian, Rovás Irás, Language, Writing">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+    <style>
+        :root {
+            /* These variables exist so you can make quick and simple style changes without much CSS knowledge */
+
+            /* applies to all areas */
+            --font-family: sans-serif;
+            --font-size: 20px;
+            --line-height: 1.3em;
+            --font-color: black;
+            --link-color: #363636;
+            --link-text-decoration: none;
+
+            /* main content (between sidebars) */
+            --content-padding: 25px;
+            --content-bg-color: #d2d2d2;
+
+            /* header */
+            --header-height: 500px;
+            --header-background: url('hungarian_conquest.jpg');
+            --header-margin-bottom: 0px;
+
+            /* sidebar */
+            --sidebar-margin: 10px;
+            --sidebar-width: 500px;
+            --sidebar-padding: 15px;
+            --sidebar-bg-color: #d2d2d2;
+
+            /* footer */
+            --footer-height: 30px;
+            --footer-bg-color: #d2d2d2;
+
+            /* navbar */
+            --navitems-alignment: center;
+            --space-between-navitems: 20px;
+            --navbar-margin-bottom: 10px;
+            --nav-bg-color: #d2d2d2;
+
+            /* container */
+            --container-width: 1500px;
+            --container-bg-color: #e8e8e8;
+
+            /* controls the gap between the content and the footer */
+            --row-gap: 5px;
+
+            /* To add scrollbars to your sidebars, just make the height a px value and change overflow to 'auto' */
+
+            --sidebar-height: 100%;
+            --sidebar-overflow: hidden;
+            --background-color: #e8e8e8;
+        }
+
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--background-color);
+            font-family: var(--font-family);
+            font-size: var(--font-size);
+            line-height: var(--line-height);
+            color: var(--font-color);
+        }
+
+        body a {
+            color: var(--link-color);
+            font-weight: bold;
+            text-decoration: var(--link-text-decoration);
+        }
+
+        #main-container {
+            max-width: var(--container-width);
+            margin: 0 auto;
+            background-color: var(--container-bg-color);
+        }
+
+        .flex {
+            display: flex;
+            margin-bottom: var(--row-gap);
+        }
+
+        .content-wrap {
+            margin-top: var(--content-margin-top);
+        }
+
+        #content-container {
+            width: 60%;
+            margin-bottom: var(--row-gap);
+            background-color: var(--content-bg-color);
+        }
+
+        #left-sidebar {
+            width: var(--sidebar-width);
+            margin-right: var(--sidebar-margin);
+            margin-bottom: var(--row-gap);
+            height: var(--sidebar-height);
+            overflow: var(--sidebar-overflow);
+            background-color: var(--sidebar-bg-color);
+        }
+
+        #right-sidebar {
+            width: var(--sidebar-width);
+            margin-left: var(--sidebar-margin);
+            margin-bottom: var(--row-gap);
+            height: var(--sidebar-height);
+            overflow: var(--sidebar-overflow);
+            background-color: var(--sidebar-bg-color);
+        }
+
+        #header-contained {
+            height: var(--header-height);
+            margin-bottom: var(--header-margin-bottom);
+            background-image: var(--header-background);
+            background-position: center center;
+        }
+
+        #footer {
+            height: var(--footer-height);
+            text-align: center;
+            color: var(--font-color);
+            background-color: var(--footer-bg-color);
+        }
+
+        #header-full {
+            display: none;
+            height: var(--header-height);
+            margin-bottom: var(--header-margin-bottom);
+            background-image: var(--header-background);
+            background-position: center center;
+        }
+
+        #navbar-contained {
+            margin-bottom: var(--row-gap)
+        }
+
+        #navbar-full {
+            display: none;
+        }
+
+        .nav {
+            margin-left: 0;
+            text-align: var(--navitems-alignment);
+            margin-top: 0;
+            margin-bottom: var(--navbar-margin-bottom);
+            padding-top: 1em;
+            padding-bottom: 1em;
+            background-color: var(--nav-bg-color);
+        }
+
+        .nav li {
+            display: inline-block;
+            padding-right: var(--space-between-navitems);
+        }
+
+        .wrapper {
+            padding: var(--content-padding);
+            padding-top: var(--sidebar-padding);
+        }
+
+        .sidebar-wrapper {
+            padding: var(--sidebar-padding);
+            height: var(--sidebar-height);
+            overflow: var(--sidebar-overflow);
+        }
+
+        .footer-wrapper {
+            padding: 5px;
+        }
+
+        /* To keep your site RESPONSIVE, make sure this variable matches the width for --container-width UNLESS --container-width is 100% - if it's 100%, you'll need to manually input a breakpoint. */
+        @media only screen and (max-width: 800px) {
+            .flex {
+                flex-wrap: wrap;
+            }
+
+            #left-sidebar {
+                width: 100%;
+                display: block;
+                order: 2;
+                margin-right: 0;
+                margin-bottom: 10px;
+            }
+
+            #right-sidebar {
+                width: 100%;
+                display: block;
+                order: 3;
+                margin-left: 0;
+            }
+
+            #content-container {
+                width: 100%;
+                display: block;
+                order: 1;
+                margin-bottom: 10px;
+            }
+
+        }
+    </style>
+    <div id="header-full" style="display: block;"></div>
+    <div id="navbar-full" style="display: block;">
+        <ul class="nav">
+            <li><a href="index.html">Main</a></li>
+            <li><a href="rovas.html">Home</a></li>
+            <li><a href="#">About</a></li>
+        </ul>
+    </div>
+        <div class="content-wrap flex alignment">
+            <div id="left-sidebar" style="display: block;">
+                <div class="sidebar-wrapper">Old Hungarian script (Rovás Irás) was the Hungarian script used primarily before the year 1000,
+                    before the christianisation of Hungary. Due to Hungary converting to Roman Catholicism, it lead to the language being Latinised
+                    and the removal of the old 'pagan' writing system. Old Hungarian is read right to left, likely due to people carving into wood/stone
+                    and this being easier and safer right to left as opposed to most languages being left to right. This page's purpose is to teach Hungarian
+        runic writing to everyone, so that we Hungarians can use it once again, because our ancestors created this script, thus we must respect our past.</div>
+            </div>
+            <div id="content-container" style="flex-grow: 1;">
+                <div class="wrapper">
+                    <h1 style=text-align:center>About</h1>
+
+                        <p>
+                            The page aims to teach more about the runic 
+                            script of the Hungarians that is no longer used
+                            in mass.
+                        </p>
+
+
+            
+
+                    </div>
+            </div>
+            <div id="right-sidebar" style="display: block;">
+                <div class="sidebar-wrapper">Rovás Irás volt a regi magyar irás rendszer ezer ellőt, ellőtte hogy Magyarország lett kerestény. A Romai Katolikus egyház befojásatol allat lett a nyelv latinazát
+                        és a régi 'pagány' irás rendszer kivonva. Rovás Irás jobbról balról van le olvasva, vallószinúleg mert akkor minden fába és kőbe volt
+                        le irva, ezért konyebb és biztonságossab mint a balról jobbról irás. Ez a honlap arrol foglalkozik hogy tanítson a Magyar rovás irást mindenkinek, hogy mi Magyarok kezdjunk használni megint
+                        ezt az irást rendszer, mert a mi őseink kitalátak ezt az irást, ezért meg kell tiszteljük a mi múltunk.
+                </div>
+            </div>
+        </div>
+        <div id="footer" style="display: none;">
+            <div class="footer-wrapper">footer</div>
+        </div>
+    </div>
+

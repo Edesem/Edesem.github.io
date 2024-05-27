@@ -1,0 +1,37 @@
+@import url('https://fonts.googleapis.com/css2?family=Castoro+Titling&family=Homemade+Apple&family=Raleway:ital,wght@1,300&display=swap');
+
+
+.blue { color: #0d6efd; }
+.bluebg { background-color: #0c2446;}
+
+.custom-rounded-image {
+    border-radius: 100% ;
+}
+
+.castoro {
+    font-family: "Castoro Titling", cursive;
+    font-size: 3rem;
+}
+
+.handwritten {
+    font-family: 'Homemade Apple', cursive; 
+}
+
+.raleway {
+    font-family: 'Raleway', sans-serif;
+}
+
+#main-picture:hover { opacity: 70%;}
+
+.fade-in {
+    animation: fade-in 0.5s ease-in;
+}
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 0.7;
+    }
+}
