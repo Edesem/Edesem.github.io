@@ -1,5 +1,5 @@
 ---
-
+const { title = "Edesem" } = Astro.props;
 ---
 
 <html lang="en">
@@ -9,9 +9,44 @@
 		<link rel="icon" href="/favicon.ico" />
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
+		<title>{title}</title>
 	</head>
 	<body>
-		<h1>Astro</h1>
+		<div>
+			<h1 style="color: white">Welcome</h1>
+			<img
+				src="https://github.com/edesem.png"
+				alt="Edesem Logo"
+				width="200"
+				height="200"
+			/>
+		</div>
+
+		<div>
+			<p>
+				Lorem ipsum, dolor sit amet consectetur adipisicing elit. Neque, voluptatibus! Nisi molestiae in blanditiis est corporis saepe earum, maxime quibusdam, facere asperiores accusamus odio totam? Quia sit aperiam accusantium reprehenderit?
+			</p>
+		</div>
 	</body>
 </html>
+
+<style>
+	body {
+		font-family: system-ui, sans-serif;
+		justify-content: center;
+		display: flex;
+		background-color: #212121;
+		margin: 4rem;
+	}
+
+	img {
+		border-radius: 50%;
+	}
+
+	p {
+		color: white;
+		max-width: 600px;
+		line-height: 1.6;
+		margin-left: 3rem;
+	}
+</style>
