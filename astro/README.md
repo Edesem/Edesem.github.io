@@ -1,43 +1,27 @@
-# Astro Starter Kit: Minimal
+# Edesem
 
-```sh
-npm create astro@latest -- --template minimal
-```
+Personal site built with [Astro](https://astro.build). Static output, deployed to GitHub Pages.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Commands
 
-## 🚀 Project Structure
+Run from this folder (`astro/`):
 
-Inside of your Astro project, you'll see the following folders and files:
+| Command           | Action                                  |
+| :---------------- | :-------------------------------------- |
+| `npm install`     | Install dependencies                    |
+| `npm run dev`     | Start the dev server at `localhost:4321` |
+| `npm run build`   | Build the site into `dist/`             |
+| `npm run preview` | Preview the built site                  |
 
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
+Restart `npm run dev` if you add a new top-level file such as `src/content.config.ts`.
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+## Where things live
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+- `src/data/site.ts`: headline, intro, apps and the "Outside work" lines.
+- `src/content/blog/`: blog posts, one Markdown file each. Set `draft: true` in a post's front matter to hide it.
+- `src/styles/global.css`: colours, type and the single column.
+- `public/`: favicon and other static files.
 
-Any static assets, like images, can be placed in the `public/` directory.
+## Writing a post
 
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+Copy `src/content/blog/template-post.md` to a new file, change the title, description and date, then replace the text. `template-post.md` is a placeholder: edit or delete it before publishing.
