@@ -1,0 +1,47 @@
+---
+import type { Project } from "../data/site";
+
+interface Props {
+	projects: Project[];
+}
+
+const { projects } = Astro.props;
+---
+
+<ul class="apps">
+	{projects.map((p) => (
+		<li>
+			<h3>{p.name}</h3>
+			<p>{p.tagline}</p>
+			{p.usage && <p>{p.usage}</p>}
+			<p class="muted">{p.stack.join(", ")}</p>
+			<p class="links">
+				{p.links.map((link) => <a href={link.href} target="_blank" rel="noopener">{link.label}</a>)}
+			</p>
+		</li>
+	))}
+</ul>
+
+<style>
+	.apps {
+		display: grid;
+		gap: 1.75rem;
+	}
+
+	h3 {
+		font-size: 1.0625rem;
+	}
+
+	/* Roomy tap targets: each link is at least 44px tall */
+	.links {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0 1.25rem;
+		margin-top: -0.1rem;
+	}
+
+	.links a {
+		display: inline-block;
+		padding-block: 0.6rem;
+	}
+</style>

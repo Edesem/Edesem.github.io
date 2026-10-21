@@ -1,0 +1,42 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { formatDate } from "../lib/posts";
+
+interface Props {
+	posts: CollectionEntry<"blog">[];
+}
+
+const { posts } = Astro.props;
+---
+
+{
+	posts.length > 0 ? (
+		<ul class="posts">
+			{posts.map((post) => (
+				<li>
+					<time class="muted" datetime={post.data.date.toISOString()}>
+						{formatDate(post.data.date)}
+					</time>
+					<a href={`/blog/${post.id}/`}>{post.data.title}</a>
+				</li>
+			))}
+		</ul>
+	) : (
+		<p class="muted">No posts yet.</p>
+	)
+}
+
+<style>
+	.posts {
+		display: grid;
+	}
+
+	li {
+		display: grid;
+		grid-template-columns: 6.75rem minmax(0, 1fr);
+		gap: 1rem;
+		align-items: center;
+		min-height: 2.75rem;
+	}
+
+</style>

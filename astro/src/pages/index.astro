@@ -1,0 +1,44 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import Hero from "../components/Hero.astro";
+import Section from "../components/Section.astro";
+import AppList from "../components/AppList.astro";
+import PostList from "../components/PostList.astro";
+import { beyond, projects } from "../data/site";
+import { getPosts } from "../lib/posts";
+
+const posts = await getPosts();
+---
+
+<Layout>
+	<Header />
+	<main class="column">
+		<Hero />
+
+		<Section id="apps" title="Apps">
+			<AppList projects={projects} />
+		</Section>
+
+		<Section id="blog" title="Blog">
+			<PostList posts={posts} />
+		</Section>
+
+		<Section id="outside-work" title="Outside work">
+			<ul class="beyond">
+				{beyond.map((item) => <li>{item.body}</li>)}
+			</ul>
+		</Section>
+	</main>
+</Layout>
+
+<style>
+	main {
+		padding-bottom: 6rem;
+	}
+
+	.beyond {
+		display: grid;
+		gap: 0.6rem;
+	}
+</style>

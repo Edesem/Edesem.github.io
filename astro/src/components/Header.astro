@@ -1,0 +1,28 @@
+---
+import { profile } from "../data/site";
+---
+
+<header class="column bar">
+	<a class="home" href="/">{profile.handle}</a>
+	<a class="muted" href={profile.github} rel="me noopener" target="_blank">GitHub</a>
+</header>
+
+<style>
+	.bar {
+		display: flex;
+		justify-content: space-between;
+		gap: 1rem;
+		padding-block: 0.75rem;
+	}
+
+	.bar a {
+		display: inline-flex;
+		align-items: center;
+		min-height: 2.75rem;
+	}
+
+	.home {
+		font-weight: 500;
+		text-decoration: none;
+	}
+</style>
