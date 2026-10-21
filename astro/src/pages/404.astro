@@ -1,0 +1,27 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+---
+
+<Layout title="Page not found · Edesem">
+	<Header />
+	<main class="column">
+		<h1>Page not found</h1>
+		<p class="muted">There is nothing at this address. <a href="/">Go to the homepage.</a></p>
+	</main>
+</Layout>
+
+<style>
+	main {
+		padding-block: clamp(3rem, 12vw, 7rem) 6rem;
+	}
+
+	h1 {
+		font-size: clamp(1.75rem, 5vw, 2.25rem);
+		line-height: 1.25;
+	}
+
+	p {
+		margin-top: 1rem;
+	}
+</style>
