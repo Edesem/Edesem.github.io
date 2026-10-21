@@ -1,0 +1,203 @@
+---
+import { render } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+import Header from "../../components/Header.astro";
+import { formatDate, getPosts } from "../../lib/posts";
+
+export async function getStaticPaths() {
+	const posts = await getPosts();
+	return posts.map((post) => ({ params: { id: post.id }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const { Content, headings } = await render(post);
+const toc = headings.filter((h) => h.depth <= 3);
+---
+
+<Layout title={`${post.data.title} · Edesem`} description={post.data.description}>
+	<Header />
+	<main class="column">
+		<article>
+			{
+				toc.length > 2 && (
+					<aside class="toc" aria-label="Table of contents">
+						<nav>
+							<p class="toc-title">On this page</p>
+							<ul>
+								{toc.map((h) => (
+									<li class={`depth-${h.depth}`}>
+										<a href={`#${h.slug}`}>{h.text}</a>
+									</li>
+								))}
+							</ul>
+						</nav>
+					</aside>
+				)
+			}
+			<header>
+				<h1>{post.data.title}</h1>
+				<p class="muted">
+					<time datetime={post.data.date.toISOString()}>{formatDate(post.data.date)}</time>
+				</p>
+			</header>
+			<div class="prose">
+				<Content />
+			</div>
+		</article>
+	</main>
+</Layout>
+
+<script>
+	// Highlight the heading currently in view in the table of contents.
+	const links = document.querySelectorAll<HTMLAnchorElement>(".toc a");
+	const byId = new Map([...links].map((a) => [a.hash.slice(1), a]));
+	const observer = new IntersectionObserver(
+		(entries) => {
+			for (const entry of entries) {
+				if (!entry.isIntersecting) continue;
+				links.forEach((a) => a.removeAttribute("aria-current"));
+				byId.get(entry.target.id)?.setAttribute("aria-current", "true");
+			}
+		},
+		{ rootMargin: "0px 0px -70% 0px" },
+	);
+	byId.forEach((_, id) => {
+		const el = document.getElementById(id);
+		if (el) observer.observe(el);
+	});
+</script>
+
+<style>
+	main {
+		padding-block: clamp(2rem, 8vw, 4rem) 6rem;
+	}
+
+	article {
+		position: relative;
+	}
+
+	/* Side table of contents: only when there is room beside the column. */
+	.toc {
+		display: none;
+	}
+
+	@media (min-width: 1100px) {
+		.toc {
+			display: block;
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			left: calc(100% + 2.5rem);
+			width: 12rem;
+		}
+
+		.toc nav {
+			position: sticky;
+			top: 2rem;
+		}
+	}
+
+	.toc-title {
+		margin-bottom: 0.75rem;
+		font-size: 0.8125rem;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: var(--muted);
+	}
+
+	.toc ul {
+		list-style: none;
+		padding: 0;
+		border-left: 1px solid var(--line);
+	}
+
+	.toc li a {
+		display: block;
+		padding: 0.25rem 0 0.25rem 0.9rem;
+		margin-left: -1px;
+		border-left: 1px solid transparent;
+		font-size: 0.875rem;
+		line-height: 1.35;
+		color: var(--muted);
+		text-decoration: none;
+	}
+
+	.toc li.depth-3 a {
+		padding-left: 1.75rem;
+	}
+
+	.toc li a:hover,
+	.toc li a[aria-current] {
+		color: var(--text);
+		border-left-color: var(--text);
+	}
+
+	h1 {
+		font-size: clamp(1.75rem, 5vw, 2.25rem);
+		line-height: 1.25;
+	}
+
+	header p {
+		margin-top: 0.5rem;
+	}
+
+	.prose {
+		margin-top: 2.5rem;
+	}
+
+	.prose :global(> * + *) {
+		margin-top: 1.1rem;
+	}
+
+	.prose :global(h2) {
+		margin-top: 2.5rem;
+		font-size: 1.375rem;
+	}
+
+	.prose :global(h3) {
+		margin-top: 2rem;
+		font-size: 1.125rem;
+	}
+
+	.prose :global(ul),
+	.prose :global(ol) {
+		padding-left: 1.25rem;
+	}
+
+	.prose :global(ul) {
+		list-style: disc;
+	}
+
+	.prose :global(ol) {
+		list-style: decimal;
+	}
+
+	.prose :global(li + li) {
+		margin-top: 0.4rem;
+	}
+
+	.prose :global(blockquote) {
+		margin-inline: 0;
+		padding-left: 1.25rem;
+		border-left: 1px solid var(--line);
+		color: var(--muted);
+	}
+
+	.prose :global(code) {
+		font-size: 0.9em;
+		color: var(--text);
+	}
+
+	.prose :global(pre) {
+		padding: 1rem;
+		overflow-x: auto;
+		border: 1px solid var(--line);
+		font-size: 0.9375rem;
+		line-height: 1.5;
+	}
+
+	.prose :global(img) {
+		max-width: 100%;
+		height: auto;
+	}
+</style>
