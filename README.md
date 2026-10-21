@@ -4,7 +4,7 @@ Personal site built with [Astro](https://astro.build). Static output, deployed t
 
 ## Commands
 
-Run from this folder (`astro/`):
+Run from the repository root:
 
 | Command           | Action                                  |
 | :---------------- | :-------------------------------------- |
