@@ -5,7 +5,7 @@ import { defineConfig } from 'astro/config';
 export default defineConfig({
 	site: 'https://edesem.github.io',
 	markdown: {
-		// A light theme keeps code blocks on the paper instead of dark slabs.
-		shikiConfig: { theme: 'github-light' },
+		// Dark code theme to match the dark site.
+		shikiConfig: { theme: 'github-dark' },
 	},
 });

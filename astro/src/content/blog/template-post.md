@@ -22,7 +22,7 @@ Body text sits in a narrow column so long paragraphs stay easy to read. A second
 
 > A quotation or pulled line looks like this.
 
-Inline `code` appears in the paper tone, and a code block looks like this:
+Inline `code` and a code block look like this:
 
 ```ts
 function greet(name: string) {

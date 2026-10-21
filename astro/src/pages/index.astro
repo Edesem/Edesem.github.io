@@ -3,9 +3,9 @@ import Layout from "../layouts/Layout.astro";
 import Header from "../components/Header.astro";
 import Hero from "../components/Hero.astro";
 import Section from "../components/Section.astro";
-import AppTimetable from "../components/AppTimetable.astro";
+import AppList from "../components/AppList.astro";
 import PostList from "../components/PostList.astro";
-import { beyond, profile, projects } from "../data/site";
+import { beyond, projects } from "../data/site";
 import { getPosts } from "../lib/posts";
 
 const posts = await getPosts();
@@ -13,59 +13,32 @@ const posts = await getPosts();
 
 <Layout>
 	<Header />
-	<main>
+	<main class="column">
 		<Hero />
 
 		<Section id="apps" title="Apps">
-			<AppTimetable projects={projects} />
+			<AppList projects={projects} />
 		</Section>
 
 		<Section id="blog" title="Blog">
 			<PostList posts={posts} />
 		</Section>
 
-		<Section id="beyond" title="Beyond">
-			<ul class="rows">
-				{beyond.map((item) => (
-					<li>
-						<h3 class="cell-label">{item.title}</h3>
-						<p>{item.body}</p>
-					</li>
-				))}
+		<Section id="outside-work" title="Outside work">
+			<ul class="beyond">
+				{beyond.map((item) => <li>{item.body}</li>)}
 			</ul>
 		</Section>
 	</main>
-
-	<footer>
-		<div class="wrap foot">
-			<p>Edesem</p>
-			<a href={profile.github} rel="me noopener" target="_blank">github.com/edesem</a>
-		</div>
-	</footer>
 </Layout>
 
 <style>
-	.rows h3.cell-label {
-		font-size: 1rem;
+	main {
+		padding-bottom: 6rem;
 	}
 
-	footer {
-		margin-top: clamp(4rem, 9vw, 6rem);
-		border-top: var(--rule);
-		color: var(--ink-soft);
-	}
-
-	.foot {
-		display: flex;
-		flex-wrap: wrap;
-		justify-content: space-between;
-		gap: 0.5rem 1rem;
-		padding-block: 1.5rem 2rem;
-		font-size: 0.9375rem;
-	}
-
-	.foot a {
-		color: var(--ink);
-		text-underline-offset: 0.3em;
+	.beyond {
+		display: grid;
+		gap: 0.6rem;
 	}
 </style>

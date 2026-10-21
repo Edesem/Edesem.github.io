@@ -11,70 +11,32 @@ const { posts } = Astro.props;
 
 {
 	posts.length > 0 ? (
-		<ol class="rows posts">
+		<ul class="posts">
 			{posts.map((post) => (
 				<li>
-					<time class="cell-label" datetime={post.data.date.toISOString()}>
+					<time class="muted" datetime={post.data.date.toISOString()}>
 						{formatDate(post.data.date)}
 					</time>
-					<div>
-						<h3>
-							<a href={`/blog/${post.id}/`}>{post.data.title}</a>
-						</h3>
-						<p>{post.data.description}</p>
-					</div>
+					<a href={`/blog/${post.id}/`}>{post.data.title}</a>
 				</li>
 			))}
-		</ol>
+		</ul>
 	) : (
-		<p class="empty">No posts yet.</p>
+		<p class="muted">No posts yet.</p>
 	)
 }
 
 <style>
-	.posts > li {
-		position: relative;
+	.posts {
+		display: grid;
 	}
 
-	.posts h3 {
-		font-size: 1.5rem;
-		font-weight: 600;
+	li {
+		display: grid;
+		grid-template-columns: 6.75rem minmax(0, 1fr);
+		gap: 1rem;
+		align-items: center;
+		min-height: 2.75rem;
 	}
 
-	.posts a {
-		text-decoration: none;
-	}
-
-	/* The whole row is the click target */
-	.posts a::after {
-		content: "";
-		position: absolute;
-		inset: 0;
-	}
-
-	.posts li:hover h3 a {
-		text-decoration: underline;
-		text-underline-offset: 0.25em;
-	}
-
-	.posts li:has(a:focus-visible) {
-		outline: 2px solid var(--ink);
-		outline-offset: -2px;
-	}
-
-	.posts a:focus-visible {
-		outline: none;
-	}
-
-	.posts p {
-		margin-top: 0.35rem;
-		max-width: 40rem;
-		color: var(--ink-soft);
-	}
-
-	.empty {
-		padding-block: 1.25rem;
-		border-block: var(--rule);
-		color: var(--ink-soft);
-	}
 </style>
