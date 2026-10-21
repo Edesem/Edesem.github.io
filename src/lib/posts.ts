@@ -14,3 +14,15 @@ export function formatDate(date: Date) {
 		timeZone: "UTC",
 	});
 }
+
+const WORDS_PER_MINUTE = 200;
+
+/** Estimated reading time, e.g. "4 min read", from a post's raw markdown. */
+export function readingTime(markdown = "") {
+	const text = markdown
+		.replace(/```[\s\S]*?```/g, " ")
+		.replace(/!\[[^\]]*\]\([^)]*\)/g, " ")
+		.replace(/\[([^\]]*)\]\([^)]*\)/g, "$1");
+	const words = text.split(/\s+/).filter((w) => /\w/.test(w)).length;
+	return `${Math.max(1, Math.ceil(words / WORDS_PER_MINUTE))} min read`;
+}
