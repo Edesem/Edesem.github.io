@@ -1,6 +1,6 @@
 ---
 import type { CollectionEntry } from "astro:content";
-import { formatDate } from "../lib/posts";
+import { formatDate, readingTime } from "../lib/posts";
 
 interface Props {
 	posts: CollectionEntry<"blog">[];
@@ -18,6 +18,7 @@ const { posts } = Astro.props;
 						{formatDate(post.data.date)}
 					</time>
 					<a href={`/blog/${post.id}/`}>{post.data.title}</a>
+					<span class="muted reading-time">{readingTime(post.body)}</span>
 				</li>
 			))}
 		</ul>
@@ -33,10 +34,23 @@ const { posts } = Astro.props;
 
 	li {
 		display: grid;
-		grid-template-columns: 6.75rem minmax(0, 1fr);
+		grid-template-columns: 6.75rem minmax(0, 1fr) auto;
 		gap: 1rem;
 		align-items: center;
 		min-height: 2.75rem;
 	}
+	.reading-time {
+		font-size: 0.875rem;
+		white-space: nowrap;
+	}
 
+	@media (max-width: 36rem) {
+		li {
+			grid-template-columns: 6.75rem minmax(0, 1fr);
+		}
+
+		.reading-time {
+			display: none;
+		}
+	}
 </style>
