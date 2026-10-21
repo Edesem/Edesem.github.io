@@ -1,0 +1,421 @@
+---
+import type { Project } from "../data/site";
+
+interface Props {
+	projects: Project[];
+}
+
+const { projects } = Astro.props;
+
+const usage = (p: Project) => (p.stat ? `${p.stat.value} ${p.stat.label}` : "Live demo");
+---
+
+<div class="timetable">
+	<fieldset class="lines" style={`--rows:${projects.length + 1}`}>
+		<legend class="sr-only">Choose an app</legend>
+		<div class="head" aria-hidden="true">
+			<span class="h-line">Line</span>
+			<span class="h-since">Since</span>
+			<span class="h-name">App</span>
+			<span class="h-platform">Platform</span>
+			<span class="h-usage">In use</span>
+		</div>
+		{projects.map((p, i) => (
+			<div class="line">
+				<input class="pick sr-only" type="radio" name="app" id={`app-${i}`} checked={i === 0} />
+				<label class="row" for={`app-${i}`}>
+					<span class="roundel" data-community={p.community ? "" : undefined}>
+						<span class="sr-only">{p.community ? "Community app, line " : "Line "}</span>{i + 1}
+					</span>
+					<span class="since">{p.date}</span>
+					<span class="name">
+						{p.name}
+						<small>{p.tagline}</small>
+					</span>
+					<span class="platform">{p.platforms.join(" · ")}</span>
+					<span class="usage">{usage(p)}</span>
+				</label>
+
+				<div class="detail">
+					<div class="detail-head">
+						<span class="roundel big" data-community={p.community ? "" : undefined} aria-hidden="true">
+							{i + 1}
+						</span>
+						<h3>{p.name}</h3>
+					</div>
+					<div class="detail-body">
+						<div class="text">
+							<ul class="highlights">
+								{p.highlights.map((point) => <li>{point}</li>)}
+							</ul>
+							<p class="stack">
+								<span class="cell-label">Stack</span>
+								{p.stack.join(", ")}
+							</p>
+						</div>
+						{p.screenshot && (
+							<figure>
+								<img src={p.screenshot.src} alt={p.screenshot.alt} width="480" height="1039" loading={i === 0 ? "eager" : "lazy"} />
+							</figure>
+						)}
+					</div>
+					{p.links.length > 0 && (
+						<ul class="links">
+							{p.links.map((link) => (
+								<li>
+									<a href={link.href} target="_blank" rel="noopener">
+										{link.label}
+										<svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="square">
+											<path d="M4 12 12 4M5.5 4H12v6.5" />
+										</svg>
+									</a>
+								</li>
+							))}
+						</ul>
+					)}
+				</div>
+			</div>
+		))}
+		<p class="legend"><span class="roundel mini" data-community aria-hidden="true"></span>Red line: built for a community I belong to.</p>
+	</fieldset>
+</div>
+
+<style>
+	.lines {
+		min-width: 0;
+		margin: 0;
+		padding: 0;
+		border: 0;
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) 28rem;
+		/* The trailing 1fr track absorbs the pane's height so it never stretches the rows */
+		grid-template-rows: repeat(var(--rows), auto) 1fr;
+		column-gap: 2rem;
+		align-items: start;
+	}
+
+	.line:has(+ .legend) .row {
+		border-bottom: var(--rule);
+	}
+
+	.line {
+		display: contents;
+	}
+
+	/* One set of columns shared by the header and every row */
+	.head,
+	.row {
+		display: grid;
+		grid-column: 1;
+		grid-template-columns: 2.75rem 5rem minmax(0, 1fr) 5.5rem 6.5rem;
+		grid-template-areas: "line since name platform usage";
+		column-gap: 1rem;
+		align-items: start;
+	}
+
+	.head {
+		padding: 0.5rem 0.75rem;
+		border-top: var(--rule);
+		font-family: var(--font-cond);
+		font-weight: 600;
+		font-size: 0.9375rem;
+		letter-spacing: 0.06em;
+		text-transform: uppercase;
+		color: var(--ink-soft);
+	}
+
+	.h-line { grid-area: line; }
+	.h-since { grid-area: since; }
+	.h-name { grid-area: name; }
+	.h-platform { grid-area: platform; }
+	.h-usage { grid-area: usage; }
+
+	.row {
+		padding: 1rem 0.75rem;
+		border-top: var(--rule);
+		cursor: pointer;
+		transition: background-color 0.12s ease-out;
+	}
+
+	.row .roundel { grid-area: line; }
+	.since { grid-area: since; }
+	.name { grid-area: name; }
+	.platform { grid-area: platform; }
+	.usage { grid-area: usage; }
+
+	.since,
+	.platform,
+	.usage {
+		font-family: var(--font-cond);
+		font-weight: 500;
+		font-size: 1.0625rem;
+		line-height: 1.25;
+		padding-top: 0.2rem;
+	}
+
+	.name {
+		font-family: var(--font-cond);
+		font-weight: 600;
+		font-size: 1.5rem;
+		line-height: 1.1;
+	}
+
+	.name small {
+		display: block;
+		margin-top: 0.4rem;
+		font-family: var(--font);
+		font-weight: 400;
+		font-size: 0.9375rem;
+		line-height: 1.35;
+		text-transform: none;
+		color: var(--ink-soft);
+	}
+
+	.row:hover {
+		background: var(--hover);
+	}
+
+	.pick:checked + .row {
+		background: var(--paper);
+	}
+
+	.pick:focus-visible + .row {
+		outline: 2px solid var(--ink);
+		outline-offset: -2px;
+	}
+
+	/* Line roundel: black ring, red when the app serves a community */
+	.roundel {
+		display: grid;
+		place-items: center;
+		width: 2.5rem;
+		height: 2.5rem;
+		border: 2px solid var(--ink);
+		border-radius: 50%;
+		font-family: var(--font-cond);
+		font-weight: 600;
+		font-size: 1.25rem;
+		line-height: 1;
+	}
+
+	.roundel[data-community] {
+		background: var(--red);
+		border-color: var(--red);
+		color: var(--paper);
+	}
+
+	.pick:checked + .row .roundel:not([data-community]) {
+		background: var(--ink);
+		color: var(--paper);
+	}
+
+	.roundel.big {
+		flex-shrink: 0;
+		width: 3.5rem;
+		height: 3.5rem;
+		font-size: 2rem;
+	}
+
+	.roundel.mini {
+		display: inline-block;
+		width: 0.9rem;
+		height: 0.9rem;
+		border-width: 0;
+		margin-right: 0.5rem;
+		vertical-align: -0.1rem;
+	}
+
+	/* The pinned pane, one per app; only the selected app's shows */
+	.detail {
+		display: none;
+		grid-column: 2;
+		grid-row: 1 / -1;
+		position: sticky;
+		top: 4.75rem;
+		padding: 1.5rem;
+		background: var(--paper);
+		border: var(--rule);
+	}
+
+	.pick:checked ~ .detail {
+		display: block;
+	}
+
+	.detail-head {
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+		margin-bottom: 1.25rem;
+	}
+
+	h3 {
+		font-size: 1.75rem;
+		font-weight: 600;
+	}
+
+	.detail-body {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) 10rem;
+		gap: 1.25rem;
+		align-items: start;
+	}
+
+	.detail-body:not(:has(figure)) {
+		grid-template-columns: minmax(0, 1fr);
+	}
+
+	.highlights {
+		display: grid;
+		gap: 0.5rem;
+		padding-left: 1.1rem;
+		font-size: 0.9375rem;
+		line-height: 1.4;
+	}
+
+	.stack {
+		margin-top: 1rem;
+		font-size: 0.9375rem;
+		line-height: 1.4;
+	}
+
+	.stack .cell-label {
+		display: block;
+		font-size: 1rem;
+	}
+
+	.links {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+		margin-top: 1.5rem;
+		padding-top: 1.25rem;
+		border-top: var(--rule);
+		list-style: none;
+	}
+
+	.links a {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.4rem;
+		min-height: 2.75rem;
+		padding: 0 0.9rem;
+		border: 1px solid var(--ink);
+		font-family: var(--font-cond);
+		font-weight: 600;
+		font-size: 1.0625rem;
+		letter-spacing: 0.02em;
+		text-decoration: none;
+		transition: background-color 0.12s ease-out, color 0.12s ease-out;
+	}
+
+	.links a:hover {
+		background: var(--ink);
+		color: var(--paper);
+	}
+
+	figure {
+		margin: 0;
+	}
+
+	img {
+		display: block;
+		width: 100%;
+		height: auto;
+		border: var(--rule);
+	}
+
+	.legend {
+		grid-column: 1;
+		grid-row: -2 / -1;
+		align-self: start;
+		margin-top: 0.9rem;
+		font-size: 0.9375rem;
+		color: var(--ink-soft);
+	}
+
+	/* Narrow: no side pane; the selected app opens under its own row */
+	@media (max-width: 72rem) {
+		.lines {
+			display: block;
+		}
+
+		.line {
+			display: block;
+		}
+
+		.head {
+			display: none;
+		}
+
+		.row {
+			grid-template-columns: 2.75rem minmax(0, 1fr);
+			grid-template-areas:
+				"line name"
+				"line meta";
+			row-gap: 0.5rem;
+		}
+
+		.row .since,
+		.row .platform,
+		.row .usage {
+			grid-area: auto;
+			font-size: 1rem;
+			padding-top: 0;
+		}
+
+		/* since / platform / usage share the second row */
+		.row {
+			grid-template-columns: 2.75rem repeat(3, auto) 1fr;
+			grid-template-areas:
+				"line name name name name"
+				"line since platform usage .";
+			column-gap: 0.9rem;
+		}
+
+		.row .since { grid-area: since; }
+		.row .platform { grid-area: platform; }
+		.row .usage { grid-area: usage; }
+
+		.detail {
+			position: static;
+			border-top: 0;
+			padding: 1.25rem 0.75rem 1.5rem;
+		}
+
+		.detail-head {
+			display: none;
+		}
+
+		.detail-body {
+			grid-template-columns: minmax(0, 1fr) 8rem;
+		}
+	}
+
+	@media (max-width: 34rem) {
+		.row {
+			grid-template-columns: 2.75rem 1fr;
+			grid-template-areas:
+				"line name"
+				"line since"
+				"line platform"
+				"line usage";
+			row-gap: 0.15rem;
+		}
+
+		.detail-body {
+			grid-template-columns: minmax(0, 1fr);
+		}
+
+		figure {
+			order: -1;
+			max-width: 11rem;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.row,
+		.links a {
+			transition: none;
+		}
+	}
+</style>

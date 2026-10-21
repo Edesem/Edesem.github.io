@@ -1,0 +1,26 @@
+---
+interface Props {
+	id: string;
+	title: string;
+}
+
+const { id, title } = Astro.props;
+---
+
+<section class="wrap" id={id} aria-labelledby={`${id}-title`}>
+	<h2 id={`${id}-title`}>{title}</h2>
+	<slot />
+</section>
+
+<style>
+	section {
+		margin-top: clamp(3rem, 6vw, 4.5rem);
+	}
+
+	h2 {
+		font-size: clamp(1.75rem, 3.5vw, 2.25rem);
+		padding-top: 0.9rem;
+		margin-bottom: 1.25rem;
+		border-top: var(--rule-strong);
+	}
+</style>
